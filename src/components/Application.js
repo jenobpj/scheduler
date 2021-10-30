@@ -1,25 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
+import axios from "axios"
 import "components/Application.scss";
 import DayList from "components/DayList"
 import  { useState } from "react";
 import Appointment from "components/Appointment";
-const days = [
-  {
-    id: 1,
-    name: "Monday",
-    spots: 2,
-  },
-  {
-    id: 2,
-    name: "Tuesday",
-    spots: 5,
-  },
-  {
-    id: 3,
-    name: "Wednesday",
-    spots: 0,
-  },
-];
+
 const appointments = [
   {
     id: 1,
@@ -58,8 +43,21 @@ const appointments = [
     time: "4pm",
   }
 ];
+const interview = appointments.map(appointment => (
+  <Appointment
+    key={appointment.id}
+    {...appointment}
+  />
+  
+));
 export default function Application(props) {
-  const [day, setDay] = useState("Monday");
+  const [day, setDay] = useState([]);
+  useEffect(()=>{
+   axios.get('/api/days')
+   .then(res =>{
+     setDay(res.data)
+   })
+  },[])
   return (
     <main className="layout">
       <section className="sidebar">
@@ -71,7 +69,7 @@ export default function Application(props) {
 <hr className="sidebar__separator sidebar--centered" />
 <nav className="sidebar__menu">
 <DayList
-  days={days}
+  days={day}
   value={day}   //At first glance, you might think we're just using the onChange event and value property, right? No! We are choosing the name of our props to be the same as those keywords.
   onChange={setDay}
 />
@@ -83,7 +81,8 @@ export default function Application(props) {
 />
       </section>
       <section className="schedule">
-        {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}
+      {interview}
+      <Appointment key="last" time="5pm" />
       </section>
     </main>
   );
