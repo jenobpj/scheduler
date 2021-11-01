@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:8001",
+  "react-hooks-testing-library": "^0.6.0",
   "dependencies": {
     "axios": "^0.24.0",
     "classnames": "^2.2.6",
