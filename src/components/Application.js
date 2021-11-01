@@ -26,10 +26,21 @@ const setDay = day => setState(prev => ({ ...prev, day }));
   },[])
 
 
+  function bookInterview(id, interview) {
+    console.log(id, interview);
+    const appointment = {
+      ...state.appointments[id],
+      interview: {...interview}
+    }
 
-  function bookInterview(id,interview){
-    console.log(id,interview)
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    }
+
+    setState(state => ({ ...state, appointments }));
   }
+
 
 
 
