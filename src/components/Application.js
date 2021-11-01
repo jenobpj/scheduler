@@ -4,60 +4,25 @@ import "components/Application.scss";
 import DayList from "components/DayList"
 import  { useState } from "react";
 import Appointment from "components/Appointment";
+import { getAppointmentsForDay } from "helpers/selectors";
 
-const appointments = [
-  {
-    id: 1,
-    time: "12pm",
-  },
-  {
-    id: 2,
-    time: "1pm",
-    interview: {
-      student: "Lydia Miller-Jones",
-      interviewer:{
-        id: 3,
-        name: "Sylvia Palmer",
-        avatar: "https://i.imgur.com/LpaY82x.png",
-      }
-    }
-  },
-  {
-    id: 3,
-    time: "2pm",
-  },
-  {
-    id: 4,
-    time: "3pm",
-    interview: {
-      student: "Archie Andrews",
-      interviewer:{
-        id: 4,
-        name: "Cohana Roy",
-        avatar: "https://i.imgur.com/FK8V841.jpg",
-      }
-    }
-  },
-  {
-    id: 5,
-    time: "4pm",
-  }
-];
-const interview = appointments.map(appointment => (
-  <Appointment
-    key={appointment.id}
-    {...appointment}
-  />
-  
-));
 export default function Application(props) {
-  const [day, setDay] = useState([]);
+  const [state, setState] = useState({
+    day: "Monday",
+    days: [],
+    appointments: {}
+  });
+const setDay = day => setState(prev => ({ ...prev, day }));
+
   useEffect(()=>{
-   axios.get('/api/days')
-   .then(res =>{
-     setDay(res.data)
+   Promise.all([
+     axios.get("/api/days"),
+     axios.get("/api/appointments")
+   ]).then(all=>{
+     setState(prev =>({...prev,days:all[0].data,appointments:all[1].data}))
    })
   },[])
+  const appointmentsForDay=getAppointmentsForDay(state,state.day)
   return (
     <main className="layout">
       <section className="sidebar">
@@ -69,9 +34,9 @@ export default function Application(props) {
 <hr className="sidebar__separator sidebar--centered" />
 <nav className="sidebar__menu">
 <DayList
-  days={day}
-  value={day}   //At first glance, you might think we're just using the onChange event and value property, right? No! We are choosing the name of our props to be the same as those keywords.
-  onChange={setDay}
+  days={state.days}
+  value={state.day}   //At first glance, you might think we're just using the onChange event and value property, right? No! We are choosing the name of our props to be the same as those keywords.
+  setDay={setDay}
 />
 </nav>
 <img
@@ -81,7 +46,11 @@ export default function Application(props) {
 />
       </section>
       <section className="schedule">
-      {interview}
+      {appointmentsForDay.map(appointment=> 
+        <Appointment
+        key={Appointment.id}
+        {...appointment}
+        />)}
       <Appointment key="last" time="5pm" />
       </section>
     </main>
