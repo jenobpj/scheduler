@@ -4,7 +4,7 @@ import "components/Application.scss";
 import DayList from "components/DayList"
 import  { useState } from "react";
 import Appointment from "components/Appointment";
-import { getAppointmentsForDay,getInterview } from "helpers/selectors";
+import { getAppointmentsForDay,getInterview,getInterviewersForDay } from "helpers/selectors";
 
 export default function Application(props) {
   const [state, setState] = useState({
@@ -24,7 +24,17 @@ const setDay = day => setState(prev => ({ ...prev, day }));
      setState(prev =>({...prev,days:all[0].data,appointments:all[1].data,interviewers:all[2].data}));
    })
   },[])
+
+
+  
+  function bookInterview(id,interview){
+    console.log(id,interview)
+  }
+
+
+
   const appointmentsForDay=getAppointmentsForDay(state,state.day)
+  const interviewersForDay = getInterviewersForDay(state, state.day); 
   const schedule = appointmentsForDay.map(appointment => {
     const interview = getInterview(state, appointment.interview);
 
@@ -33,6 +43,7 @@ const setDay = day => setState(prev => ({ ...prev, day }));
         key={appointment.id}
         {...appointment}
         interview={interview}
+        interviewers={interviewersForDay}
       />
     )
   })
