@@ -7,13 +7,21 @@ import useVisualMode from "hooks/useVisualMode";
 const EMPTY="EMPTY";
 const SHOW ="SHOW";
 
-function showing(props){
-  return( props.interview ? <Show student={props.interview.student} interviewer={props.interview.interviewer}/> :<Empty/>)}
+
   
 export default function Appointment(props) {
-  
-  return (<article className="appointment">
+   const{mode,transition,back} = useVisualMode(
+     props.interview ? SHOW :EMPTY
+   );
+  return (
+  <article className="appointment">
    <Header time={props.time}/> 
-   {showing(props)}
+   {mode === EMPTY && <Empty/>}
+      {mode === SHOW && (
+        <Show
+        student={props.interview.student}
+        interviewer={props.interview.interviewer}
+        />
+      )}
   </article>);
 }
