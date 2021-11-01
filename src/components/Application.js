@@ -38,7 +38,9 @@ const setDay = day => setState(prev => ({ ...prev, day }));
       [id]: appointment
     }
 
-    setState(state => ({ ...state, appointments }));
+    return axios.put(`/api/appointments/${id}`, {interview})
+      .then(response => setState(state => ({ ...state, appointments })));
+  
   }
 
 

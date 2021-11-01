@@ -4,11 +4,13 @@ import Header from "./Header";
 import Show from "./Show";
 import Empty from "./Empty";
 import Form from "./Form";
+import Status from "./Status";
 import useVisualMode from "hooks/useVisualMode";
 
 const EMPTY="EMPTY";
 const SHOW ="SHOW";
 const CREATE="CREATE";
+const SAVE="SAVE"
 
 
   
@@ -23,7 +25,10 @@ export default function Appointment(props) {
       interviewer
     };
 
-    props.bookInterview(props.id, interview);
+    transition(SAVE);
+
+    props.bookInterview(props.id, interview)
+    .then(() => transition(SHOW));
   }
 
 
@@ -48,5 +53,10 @@ export default function Appointment(props) {
           onCancel={back}
         />
       )}
-  </article>);
+       {mode === SAVE && (
+        <Status
+          message={"Saving"}
+        />
+      )}
+  </article>)
 }
