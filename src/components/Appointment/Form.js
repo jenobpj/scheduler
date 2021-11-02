@@ -3,21 +3,32 @@ import Button from "components/Button";
 import InterviewerList from "components/InterviewerList";
 
 export default function Form(props){
-const [student, setStudent] = useState(props.student || "");
+const [name, setName] = useState(props.name || "");
 const [interviewer, setInterviewer] = useState(props.interviewer || null);
+const [error, setError] = useState("");
 //Reset form and goes to previous appointment visual mode
 //called when user cancels out of an appointment form
 const reset=()=>{
-  setStudent("");
+  setName("");
   setInterviewer(null);
 }
 const cancel=()=>{
   reset();
   props.onCancel();
 }
-const validate=()=>{
-  
-}
+//Validates that user entered a name into form, and calls the function to book interview
+  // Called when user clicks "Save" in appointment form
+  function validate() {
+    if (name === "") {
+      setError("Student name cannot be blank");
+      return;
+    }
+
+    setError("");
+    props.onSave(name, interviewer);
+  }
+
+
   return(
     <main className="appointment__card appointment__card--create">
   <section className="appointment__card-left">
@@ -27,8 +38,8 @@ const validate=()=>{
         name="name"
         type="text"
         placeholder="Enter Student Name"
-        value={student}
-        onChange={event=>setStudent(event.target.value)}
+        value={name}
+        onChange={event=>setName(event.target.value)}
       />
     </form>
     <InterviewerList 
@@ -40,7 +51,7 @@ const validate=()=>{
   <section className="appointment__card-right">
     <section className="appointment__actions">
       <Button danger onClick={cancel}>Cancel</Button>
-       <Button confirm onClick={validate}>Save</Button> 
+      <Button confirm onClick={validate}>Save</Button>
     </section>
   </section>
 </main>
