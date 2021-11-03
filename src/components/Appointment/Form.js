@@ -24,7 +24,6 @@ const cancel=()=>{
       return;
     }
 
-    setError("");
     props.onSave(name, interviewer);
   }
 
@@ -42,6 +41,7 @@ const cancel=()=>{
         onChange={event=>setName(event.target.value)}
       />
     </form>
+    <section className="appointment__validation">{error}</section>
     <InterviewerList 
       interviewers={props.interviewers}
       value={interviewer}
