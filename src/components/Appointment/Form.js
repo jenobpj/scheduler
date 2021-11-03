@@ -32,13 +32,14 @@ const cancel=()=>{
     <main className="appointment__card appointment__card--create">
   <section className="appointment__card-left">
     <form  onSubmit={event => event.preventDefault()} autoComplete="off">
-      <input
+      <input 
         className="appointment__create-input text--semi-bold"
         name="name"
         type="text"
         placeholder="Enter Student Name"
         value={name}
         onChange={event=>setName(event.target.value)}
+        data-testid="student-name-input"
       />
     </form>
     <section className="appointment__validation">{error}</section>
