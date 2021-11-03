@@ -1,3 +1,5 @@
+//Return an array of appointment object fo the current selected day
+
 export const getAppointmentsForDay=(state,day)=>{
   const dayObj=state.days.find(elem => elem.name === day)//checking the days.name ===  day which we provide
   if(!dayObj){
@@ -13,7 +15,7 @@ export const getAppointmentsForDay=(state,day)=>{
  return appointmentsForDay;
 
 }
-
+ //Return an array of interviewer objects fo the current selected day
 export const getInterviewersForDay = (state, day) => {
   const dayObj = state.days.find(elem => elem.name === day);
 
@@ -34,7 +36,7 @@ export const getInterviewersForDay = (state, day) => {
   return interviewersForDay;
 }
 
-
+ //Returns the interview object fo the specific appointment slot
 export const getInterview =(state,interview)=>{
   if(!interview){
     return null;

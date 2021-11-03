@@ -1,7 +1,8 @@
-import React from "react"
-import DayListItem from "components/DayListItem"
+import React from "react";
+import DayListItem from "components/DayListItem";
 export default function DayList(props) {
-  const dayListItems = props.days.map(day => (
+  //made an array of daylist components
+  const dayListItems = props.days.map((day) => (
     <DayListItem
       key={day.id}
       name={day.name}
@@ -10,5 +11,5 @@ export default function DayList(props) {
       setDay={props.setDay}
     />
   ));
-  return <ul>{dayListItems}</ul>
+  return <ul>{dayListItems}</ul>;
 }
