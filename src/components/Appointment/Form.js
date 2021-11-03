@@ -23,7 +23,7 @@ const cancel=()=>{
       setError("Student name cannot be blank");
       return;
     }
-
+    setError("");
     props.onSave(name, interviewer);
   }
 
