@@ -11,19 +11,30 @@ Front-End: HTML, SCSS, React
 Back-End: Node, Express, PostgreSQL
 
 ## Dependencies
- -React 16.9.0 or above
- -Axios
- -Classnames
- -Node.js
- -Express
- -Node-postgres
+
+- React 16.9.0 or above
+- Axios
+- Classnames
+- Node.js
+- Express
+- Node-postgres
+
+## Testing
+
+This app was extensively tested using the following technologies:
+
+- Storybook for unit testing
+- Jest for unit and integration testing
+- Cypress for end to end testing
+
+
 
 
 ## Final product
-!["interview booked"](./screenshots/image1.png)
-!["Delete message"](./screenshots/image2.pngg)
-!["Add interview"](./screenshots/image3.png)
-!["Validation message"](./screenshots/image4.png)
+!["interview booked"](docs/image1.png)
+!["Delete message"](docs/image2.png)
+!["Add interview"](docs/image3.png)
+!["Validation message"](docs/image4.png)
 
 
 
